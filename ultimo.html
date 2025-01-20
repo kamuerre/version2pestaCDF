@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pestañas Personalizadas</title>
+    <style>
+        /* Estilo general */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        /* Contenedor de pestañas verticales */
+        .vertical-tabs {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        /* Botones de las pestañas */
+        .tab-button {
+            background: none;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px 0;
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+            transition: all 0.3s;
+            border-radius: 5px;
+        }
+
+        .tab-button.active {
+            background-color: #242c4f;
+            color: #e7ba61;
+            font-weight: bold;
+            border: 1px solid #e7ba61;
+        }
+
+        .tab-button:hover {
+            background-color: #f0f0f0;
+            text-decoration: underline;
+        }
+
+        /* Contenido de las pestañas */
+        .tab-content {
+            flex-grow: 1;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Estilo para pestañas internas */
+        .inner-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        .inner-tab-button {
+            background: none;
+            color: #000;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            border-radius: 3px;
+        }
+
+        .inner-tab-button.active {
+            font-weight: bold;
+            background-color: #242c4f;
+            color: #e7ba61;
+            border: 1px solid #e7ba61;
+        }
+
+        .inner-tab-button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .inner-tab-content {
+            display: none;
+        }
+
+        .inner-tab-content.active {
+            display: block;
+        }
+
+        /* Estilo de filtros */
+        .filtro-container {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .filtro-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .filtro-select,
+        .filtro-input {
+            padding: 5px;
+            margin-right: 10px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            flex: 1;
+        }
+
+        .btn-add-filtro,
+        .btn-eliminar,
+        .btn-buscar {
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .btn-add-filtro {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        .btn-eliminar {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+        }
+
+        .btn-buscar {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="vertical-tabs">
+        <!-- Botones de pestañas -->
+        <button class="tab-button active" data-target="operaciones">Operaciones</button>
+        <button class="tab-button" data-target="configuracion">Configuración</button>
+        <button class="tab-button" data-target="consultas">Consultas</button>
+    </div>
+
+    <!-- Contenido de cada pestaña -->
+    <div class="tab-content">
+        <div id="operaciones" class="tab-panel active">
+            <div class="inner-tabs">
+                <button class="inner-tab-button active" data-target="cursos">Cursos</button>
+                <button class="inner-tab-button" data-target="instituciones">Instituciones</button>
+            </div>
+            <div class="inner-tab-content active" id="cursos">
+                <h1>Cursos</h1>
+                <p>Contenido relacionado con los cursos.</p>
+                <div class="filtro-container" id="filtros-cursos"></div>
+            </div>
+            <div class="inner-tab-content" id="instituciones">
+                <h1>Instituciones</h1>
+                <p>Contenido relacionado con las instituciones.</p>
+                <div class="filtro-container" id="filtros-instituciones"></div>
+            </div>
+        </div>
+        <div id="configuracion" class="tab-panel">
+            <div class="inner-tabs">
+                <button class="inner-tab-button active" data-target="ciudadanos">Ciudadanos</button>
+                <button class="inner-tab-button" data-target="instructores">Instructores</button>
+                <button class="inner-tab-button" data-target="estados">Estados Institución</button>
+                <button class="inner-tab-button" data-target="paises">Países</button>
+                <button class="inner-tab-button" data-target="requisitos">Requisitos</button>
+                <button class="inner-tab-button" data-target="direcciones">Tipos Direcciones</button>
+                <button class="inner-tab-button" data-target="institucion">Tipos Institución</button>
+                <button class="inner-tab-button" data-target="titulos">Tipos Títulos</button>
+                <button class="inner-tab-button" data-target="requisito">Tipos Requisito</button>
+                <button class="inner-tab-button" data-target="tramites">Trámites</button>
+                <button class="inner-tab-button" data-target="estudio">Tipos De Estudio</button>
+                <button class="inner-tab-button" data-target="licencia">Clases De Licencia</button>
+                <button class="inner-tab-button" data-target="condiciones">Condiciones</button>
+                <button class="inner-tab-button" data-target="precios">Listas De Precios</button>
+                <button class="inner-tab-button" data-target="categorias">Categorías De Curso</button>
+            </div>
+        </div>
+        <div class="inner-tab-content active" id="ciudadanos">
+            <h1>Ciudadanos</h1>
+            <p>Contenido relacionado con Ciudadanos.</p>
+            <div class="filtro-container" id="filtros-ciudadanos"></div>
+        </div>
+        <div class="inner-tab-content" id="instructores">
+            <h1>Instructores</h1>
+            <p>Contenido relacionado con Instructores.</p>
+            <div class="filtro-container" id="filtros-instructores"></div>
+        </div>
+        <div class="inner-tab-content" id="estados">
+            <h1>Estados</h1>
+            <p>Contenido relacionado con Estados.</p>
+            <div class="filtro-container" id="filtros-estados"></div>
+        </div>
+    </div>
+    <div id="consultas" class="tab-panel">
+        <div class="inner-tabs">
+            <button class="inner-tab-button active" data-target="comprobantes">Comprobantes De Pago</button>
+            <button class="inner-tab-button" data-target="actualizar">Ciudadanos A Actualizar</button>
+        </div>
+        <div class="inner-tab-content active" id="comprobantes">
+            <h1>Comprobantes De Pago</h1>
+            <p>Contenido relacionado con Comprobantes De Pago.</p>
+            <div class="filtro-container" id="filtros-comprobantes"></div>
+        </div>
+        <div class="inner-tab-content" id="actualizar">
+            <h1>Ciudadanos A Actualizar</h1>
+            <p>Contenido relacionado con Ciudadanos A Actualizar.</p>
+            <div class="filtro-container" id="filtros-actualizar"></div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.tab-button');
+            const panels = document.querySelectorAll('.tab-panel');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    panels.forEach(panel => panel.classList.remove('active'));
+
+                    button.classList.add('active');
+                    const target = button.getAttribute('data-target');
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+
+            const innerButtons = document.querySelectorAll('.inner-tab-button');
+            const innerContents = document.querySelectorAll('.inner-tab-content');
+
+            innerButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    innerButtons.forEach(btn => btn.classList.remove('active'));
+                    innerContents.forEach(content => content.classList.remove('active'));
+
+                    button.classList.add('active');
+                    const target = button.getAttribute('data-target');
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+
+            function initFiltros(containerId) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = `
+                    <div class="filtro-row">
+                        <select class="filtro-select">
+                            <option value="nombre">Nombre</option>
+                            <option value="institucion">Institución</option>
+                            <option value="duracion">Duración</option>
+                            <option value="estado">Estado</option>
+                        </select>
+                        <input type="text" class="filtro-input" placeholder="Ingrese valor del filtro">
+                        <button class="btn-eliminar">Eliminar</button>
+                    </div>
+                    <button class="btn-add-filtro">Añadir Filtro</button>
+                    <button class="btn-buscar">Buscar</button>
+                `;
+
+                const addFiltroButton = container.querySelector('.btn-add-filtro');
+                addFiltroButton.addEventListener('click', () => {
+                    const newFiltroRow = document.createElement('div');
+                    newFiltroRow.className = 'filtro-row';
+                    newFiltroRow.innerHTML = `
+                        <select class="filtro-select">
+                            <option value="nombre">Nombre</option>
+                            <option value="institucion">Institución</option>
+                            <option value="duracion">Duración</option>
+                            <option value="estado">Estado</option>
+                        </select>
+                        <input type="text" class="filtro-input" placeholder="Ingrese valor del filtro">
+                        <button class="btn-eliminar">Eliminar</button>
+                    `;
+                    container.insertBefore(newFiltroRow, addFiltroButton);
+
+                    newFiltroRow.querySelector('.btn-eliminar').addEventListener('click', () => {
+                        newFiltroRow.remove();
+                    });
+                });
+
+                container.querySelector('.btn-buscar').addEventListener('click', () => {
+                    alert('Buscando con los filtros aplicados...');
+                });
+            }
+
+            initFiltros('filtros-cursos');
+            initFiltros('filtros-instituciones');
+            initFiltros('filtros-ciudadanos');
+            initFiltros('filtros-instructores');
+            initFiltros('filtros-estados');
+            initFiltros('filtros-comprobantes');
+            initFiltros('filtros-actualizar');
+        });
+    </script>
+</body>
+
+</html>
